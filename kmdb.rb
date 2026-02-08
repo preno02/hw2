@@ -78,14 +78,23 @@
 # Delete existing data, so you'll start fresh each time this script is run.
 # Use `Model.destroy_all` code.
 # TODO!
-
+# Model.destroy_all
 # Generate models and tables, according to the domain model.
 # TODO!
-
+  # Ran rails generate model studio 
+  # Ran rails generate model movie
+  # Ran rails generate model actor
+  # Ran rails generate model role
+  # Ran rails generate model agent
+ 
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
-
+  # Added the below to the migrate files
+  # t.string "name"
+  # . . . 
+  # RUN Rails db:migrate
+  # 
 # Prints a header for the movies output
 puts "Movies"
 puts "======"
@@ -93,6 +102,16 @@ puts ""
 
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
+for movie in movies
+  # read each contact row's first_name and last_name columns
+  title = movie["title"]
+  year_released = movie["year_released"]
+  rated = movie["rated"]
+  studio = studios.find { |s| s["id"] == movie["studio_id"] }["name"]
+  # display the first_name and last_name
+  puts "#{title} #{year_released} #{rated} #{studio}"
+end
+
 
 # Prints a header for the cast output
 puts ""
@@ -102,6 +121,16 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+#
+for role in roles
+  # read each contact row's first_name and last_name columns
+ movie = movies.find { |s| s["id"] == movie["movie_id"] }["title"]
+ actor = actors.find { |s| s["id"] == actor["actor_id"] }["name"]
+ character_name = role["character_name"]
+   # display the first_name and last_name
+  puts "#{movie} #{actor} #{character_name}"
+end
+
 
 # Prints a header for the agent's list of represented actors output
 puts ""
@@ -111,3 +140,11 @@ puts ""
 
 # Query the actor data and loop through the results to display the agent's list of represented actors output.
 # TODO!
+
+for actor in actors
+  # read each contact row's first_name and last_name columns
+ agent = agents.find { |s| s["id"] = agent["name"] }["agent"]
+ name = actor["name"]
+   # display the first_name and last_name
+  puts "#{name} #{agent}"
+end
