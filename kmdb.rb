@@ -79,6 +79,10 @@
 # Use `Model.destroy_all` code.
 # TODO!
 # Model.destroy_all
+Role.destroy_all
+Movie.destroy_all
+Actor.destroy_all
+#
 # Generate models and tables, according to the domain model.
 # TODO!
   # Ran rails generate model studio 
@@ -90,11 +94,38 @@
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
-  # Added the below to the migrate files
+  movies = Movie.all
+  roles = Role.all
+  actors = Actor.all
+
+# Added the below to the migrate files
   # t.string "name"
   # . . . 
   # RUN Rails db:migrate
-  # 
+  
+new_movie1 = Movie.new
+new_movie1["title"] = "Batman Begins"
+new_movie1["year_released"] = 2005
+new_movie1["rated"] = "PG-13"
+new_movie1["studio"] = "Warner Bros."
+new_movie1.save
+
+new_movie2 = Movie.new
+new_movie2["title"] = "The Dark Knight"
+new_movie2["year_released"] = 2008
+new_movie2["rated"] = "PG-13"
+new_movie2["studio"] = "Warner Bros."
+new_movie2.save
+
+new_movie3 = Movie.new
+new_movie3["title"] = "The Dark Knight Rises"
+new_movie3["year_released"] = 2012
+new_movie3["rated"] = "PG-13"
+new_movie3["studio"] = "Warner Bros."
+new_movie3.save
+
+
+
 # Prints a header for the movies output
 puts "Movies"
 puts "======"
@@ -102,6 +133,10 @@ puts ""
 
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
+
+
+
+
 for movie in movies
   # read each contact row's first_name and last_name columns
   title = movie["title"]
