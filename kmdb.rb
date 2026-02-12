@@ -94,35 +94,38 @@ Actor.destroy_all
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
-  movies = Movie.all
-  roles = Role.all
-  actors = Actor.all
+
 
 # Added the below to the migrate files
   # t.string "name"
   # . . . 
   # RUN Rails db:migrate
   # 
+# insert studio
+new_studio1 = Studio.new
+new_studio1["name"] = "Warner Bros."
+new_studio1.save
+
 # Movie model insert
 new_movie1 = Movie.new
 new_movie1["title"] = "Batman Begins"
 new_movie1["year_released"] = 2005
 new_movie1["rated"] = "PG-13"
-new_movie1["studio"] = "Warner Bros."
+new_movie1["studio_id"] = new_studio1.id
 new_movie1.save
 
 new_movie2 = Movie.new
 new_movie2["title"] = "The Dark Knight"
 new_movie2["year_released"] = 2008
 new_movie2["rated"] = "PG-13"
-new_movie2["studio"] = "Warner Bros."
+new_movie2["studio_id"] = new_studio1.id
 new_movie2.save
 
 new_movie3 = Movie.new
 new_movie3["title"] = "The Dark Knight Rises"
 new_movie3["year_released"] = 2012
 new_movie3["rated"] = "PG-13"
-new_movie3["studio"] = "Warner Bros."
+new_movie3["studio_id"] = new_studio1.id
 new_movie3.save
 
 # insert agent 
@@ -134,59 +137,61 @@ new_agent2 = Agent.new
 new_agent2["name"] = "Everyone else"
 new_agent2.save
 
+
+
 # insert Actor
 new_actor1 = Actor.new
-new_actor1["agent_id"] = new_agent1
+new_actor1["agent_id"] = new_agent1.id
 new_actor1["name"] = "Christian Bale"
 new_actor1.save
 
 new_actor2 = Actor.new
-new_actor2["agent_id"] = new_agent2
+new_actor2["agent_id"] = new_agent2.id
 new_actor2["name"] = "Michael Caine"
 new_actor2.save
 
 new_actor3 = Actor.new
-new_actor3["agent_id"] = new_agent2
+new_actor3["agent_id"] = new_agent2.id
 new_actor3["name"] = "Liam Neeson"
 new_actor3.save
 
 new_actor4 = Actor.new
-new_actor4["agent_id"] = new_agent2
+new_actor4["agent_id"] = new_agent2.id
 new_actor4["name"] = "Katie Holmes"
 new_actor4.save
 
 new_actor5 = Actor.new
-new_actor5["agent_id"] = new_agent2
+new_actor5["agent_id"] = new_agent2.id
 new_actor5["name"] = "Gary Oldman"
 new_actor5.save
 
 new_actor6 = Actor.new
-new_actor6["agent_id"] = new_agent2
+new_actor6["agent_id"] = new_agent2.id
 new_actor6["name"] = "Heath Ledger"
 new_actor6.save
 
 new_actor7 = Actor.new
-new_actor7["agent_id"] = new_agent2
+new_actor7["agent_id"] = new_agent2.id
 new_actor7["name"] = "Aaron Eckhart"
 new_actor7.save
 
 new_actor8 = Actor.new
-new_actor8["agent_id"] = new_agent2
+new_actor8["agent_id"] = new_agent2.id
 new_actor8["name"] = "Maggie Gyllenhaal"
 new_actor8.save
 
 new_actor9 = Actor.new
-new_actor9["agent_id"] = new_agent2
+new_actor9["agent_id"] = new_agent2.id
 new_actor9["name"] = "Tom Hardy"
 new_actor9.save
 
 new_actor10 = Actor.new
-new_actor10["agent_id"] = new_agent2
+new_actor10["agent_id"] = new_agent2.id
 new_actor10["name"] = "Joseph Gordon-Levitt"
 new_actor10.save
 
 new_actor11 = Actor.new
-new_actor11["agent_id"] = new_agent2
+new_actor11["agent_id"] = new_agent2.id
 new_actor11["name"] = "Anne Hathaway"
 new_actor11.save
 
@@ -281,8 +286,11 @@ new_role15["actor_id"] = new_actor11["id"]
 new_role15["character_name"] = "Selina Kyle"
 new_role15.save
 
-
-
+  movies = Movie.all
+  roles = Role.all
+  actors = Actor.all
+  studios = Studio.all
+  agents = Agent.all
 
 # Prints a header for the movies output
 puts "Movies"
@@ -311,14 +319,15 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
-#
+
+
 for role in roles
   # read each contact row's first_name and last_name columns
- movie = movies.find { |s| s["id"] == movie["movie_id"] }["title"]
- actor = actors.find { |s| s["id"] == actor["actor_id"] }["name"]
- character_name = role["character_name"]
+  movie = role.movie
+  actor = role.actor
+  character_name = role.character_name
    # display the first_name and last_name
-  puts "#{movie} #{actor} #{character_name}"
+  puts "#{movie.title} #{actor.name} #{character_name}"
 end
 
 
@@ -330,11 +339,10 @@ puts ""
 
 # Query the actor data and loop through the results to display the agent's list of represented actors output.
 # TODO!
+bale = Actor.find_by(name: "Christian Bale")
 
-for actor in actors
   # read each contact row's first_name and last_name columns
- agent = agents.find { |s| s["id"] = agent["name"] }["Me"]
- name = actor["name"]
+ agent = bale.agent.name
+ name = bale.name
    # display the first_name and last_name
   puts "#{name} #{agent}"
-end
